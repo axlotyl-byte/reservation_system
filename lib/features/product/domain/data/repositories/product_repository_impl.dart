@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:reservation_system/features/user/domain/entities/core/errors/failure.dart';
 import 'package:reservation_system/features/product/domain/entities/product.dart';
-import '../repositories/product_repository.dart';
+import 'package:reservation_system/features/product/repositories/product_repository.dart';
 import '../datasources/product_remote_data_source.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -12,7 +12,7 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<Either<Failure, List<Product>>> getProducts() async {
     try {
-      final products = await remoteDataSource.getProducts();
+      final products = await remoteDataSource.getAllProducts();
       return Right(products);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
