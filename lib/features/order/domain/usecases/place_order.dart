@@ -8,7 +8,7 @@ class PlaceOrder {
 
   PlaceOrder(this.repository);
 
-  Future<Either<Failure, order_entity.Order>> call(Order order) async {
+  Future<Either<Failure, order_entity.Order>> call(order_entity.Order order) async {
     return await repository.placeOrder(order);
   }
 }
