@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:reservation_system/features/user/domain/entities/core/errors/failure.dart';
 import 'package:reservation_system/features/product/domain/entities/product.dart';
-import 'package:reservation_system/features/product/repositories/product_repository.dart';
+import 'package:reservation_system/features/product/domain/repositories/product_repository.dart';
 import '../datasources/product_remote_data_source.dart';
+import '../models/product_model.dart';
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductRemoteDataSource remoteDataSource;
@@ -10,9 +11,10 @@ class ProductRepositoryImpl implements ProductRepository {
   ProductRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, List<Product>>> getProducts() async {
+  Future<Either<Failure, List<Product>>> getAllProducts() async {
     try {
-      final products = await remoteDataSource.getAllProducts();
+      final productModels = await remoteDataSource.getAllProducts();
+      final products = productModels.map((model) => model.toEntity()).toList();
       return Right(products);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -20,10 +22,10 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure, Product>> getProductById(String productId) async {
+  Future<Either<Failure, Product>> getProductById(String id) async {
     try {
-      final product = await remoteDataSource.getProductById(productId);
-      return Right(product);
+      final productModel = await remoteDataSource.getProductById(id);
+      return Right(productModel.toEntity());
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -32,8 +34,9 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<Either<Failure, Product>> createProduct(Product product) async {
     try {
-      final createdProduct = await remoteDataSource.createProduct(product);
-      return Right(createdProduct);
+      final productModel = ProductModel.fromEntity(product);
+      final createdProduct = await remoteDataSource.createProduct(productModel);
+      return Right(createdProduct.toEntity());
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -42,17 +45,18 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<Either<Failure, Product>> updateProduct(Product product) async {
     try {
-      final updatedProduct = await remoteDataSource.updateProduct(product);
-      return Right(updatedProduct);
+      final productModel = ProductModel.fromEntity(product);
+      final updatedProduct = await remoteDataSource.updateProduct(productModel);
+      return Right(updatedProduct.toEntity());
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, void>> deleteProduct(String productId) async {
+  Future<Either<Failure, void>> deleteProduct(String id) async {
     try {
-      await remoteDataSource.deleteProduct(productId);
+      await remoteDataSource.deleteProduct(id);
       return const Right(null);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -63,7 +67,8 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Either<Failure, List<Product>>> getProductsByCategory(
       String category) async {
     try {
-      final products = await remoteDataSource.getProductsByCategory(category);
+      final productModels = await remoteDataSource.getProductsByCategory(category);
+      final products = productModels.map((model) => model.toEntity()).toList();
       return Right(products);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -73,7 +78,8 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<Either<Failure, List<Product>>> searchProducts(String query) async {
     try {
-      final products = await remoteDataSource.searchProducts(query);
+      final productModels = await remoteDataSource.searchProducts(query);
+      final products = productModels.map((model) => model.toEntity()).toList();
       return Right(products);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
