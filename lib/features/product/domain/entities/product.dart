@@ -1,23 +1,17 @@
-import 'package:equatable/equatable.dart';
-
-class Product extends Equatable {
+class Product {
   final String id;
   final String name;
-  final String description;
   final double price;
   final String imageUrl;
-  final bool available;
+  final String description;
+  final String category; // Add this field
 
   const Product({
     required this.id,
     required this.name,
-    required this.description,
     required this.price,
     required this.imageUrl,
-    this.available = true,
+    required this.description,
+    required this.category, // Add this parameter
   });
-
-  @override
-  List<Object?> get props =>
-      [id, name, description, price, imageUrl, available];
 }

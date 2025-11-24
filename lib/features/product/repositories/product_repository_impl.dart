@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
+import 'package:reservation_system/features/product/domain/data/datasources/product_remote_data_source_impl.dart';
+import 'package:reservation_system/features/product/domain/models/product_model.dart';
 import 'package:reservation_system/features/user/domain/entities/core/errors/failure.dart';
 import 'package:reservation_system/features/product/domain/entities/product.dart';
 import 'package:reservation_system/features/product/domain/repositories/product_repository.dart';
-import '../datasources/product_remote_data_source.dart';
-import '../models/product_model.dart';
+
 
 class ProductRepositoryImpl implements ProductRepository {
-  final ProductRemoteDataSource remoteDataSource;
+  final ProductRemoteDataSourceImpl remoteDataSource;
 
   ProductRepositoryImpl({required this.remoteDataSource});
 
@@ -67,7 +68,8 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Either<Failure, List<Product>>> getProductsByCategory(
       String category) async {
     try {
-      final productModels = await remoteDataSource.getProductsByCategory(category);
+      final productModels =
+          await remoteDataSource.getProductsByCategory(category);
       final products = productModels.map((model) => model.toEntity()).toList();
       return Right(products);
     } catch (e) {
