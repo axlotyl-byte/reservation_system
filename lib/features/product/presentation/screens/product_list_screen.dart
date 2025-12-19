@@ -21,7 +21,6 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch products when screen loads
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(productStateProvider.notifier).fetchAllProducts();
     });
@@ -42,7 +41,6 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
     final featuredProducts = ref.watch(featuredProductsProvider);
     final searchResults = ref.watch(searchResultsProvider);
 
-    // Determine which products to display
     final displayProducts = _searchController.text.isNotEmpty
         ? searchResults
         : _selectedCategory == 'All'
@@ -61,13 +59,13 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
           IconButton(
             icon: const Icon(Icons.shopping_cart),
             onPressed: () {
-              // todo: Navigate to cart
+              // TODO: Navigate to cart
             },
           ),
           IconButton(
             icon: const Icon(Icons.person),
             onPressed: () {
-              context.push(AppRoute.profile.path);
+              // TODO: Profile screen navigation
             },
           ),
         ],
@@ -123,14 +121,14 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                   selectedCategory: _selectedCategory,
                   onCategorySelected: (category) {
                     setState(() {
-                      _selectedCategory = category ?? 'All'; // Handle null case
+                      _selectedCategory = category ?? 'All';
                     });
                   },
                 ),
               ),
             ),
 
-            // Featured Products Section
+            // Featured Products
             if (_searchController.text.isEmpty && _selectedCategory == 'All')
               SliverPadding(
                 padding: const EdgeInsets.all(BakerySpacing.md),
@@ -141,7 +139,6 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                   ),
                 ),
               ),
-
             if (_searchController.text.isEmpty && _selectedCategory == 'All')
               SliverPadding(
                 padding:
@@ -160,10 +157,8 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                         product: product,
                         onTap: () {
                           context.push(
-                            AppRoute.productDetail.path.replaceFirst(
-                              ':id',
-                              product.id,
-                            ),
+                            AppRoute.productDetail.path
+                                .replaceFirst(':id', product.id.toString()),
                           );
                         },
                       );
@@ -173,7 +168,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                 ),
               ),
 
-            // Products List Header
+            // Products Header
             SliverPadding(
               padding: const EdgeInsets.all(BakerySpacing.md),
               sliver: SliverToBoxAdapter(
@@ -188,13 +183,13 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
               ),
             ),
 
-            // Loading State
+            // Loading
             if (isLoading && displayProducts.isEmpty)
               const SliverFillRemaining(
                 child: Center(child: CircularProgressIndicator()),
               ),
 
-            // Error State
+            // Error
             if (error != null && displayProducts.isEmpty)
               SliverFillRemaining(
                 child: Center(
@@ -226,7 +221,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                 ),
               ),
 
-            // Empty State
+            // Empty
             if (!isLoading && error == null && displayProducts.isEmpty)
               SliverFillRemaining(
                 child: Center(
@@ -247,9 +242,8 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                         _searchController.text.isNotEmpty
                             ? 'Try a different search term'
                             : 'Check back later for new items',
-                        style: BakeryTextStyles.bodySmall(context).copyWith(
-                          color: Colors.grey,
-                        ),
+                        style: BakeryTextStyles.bodySmall(context)
+                            .copyWith(color: Colors.grey),
                       ),
                     ],
                   ),
@@ -275,10 +269,8 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                         product: product,
                         onTap: () {
                           context.push(
-                            AppRoute.productDetail.path.replaceFirst(
-                              ':id',
-                              product.id,
-                            ),
+                            AppRoute.productDetail.path
+                                .replaceFirst(':id', product.id.toString()),
                           );
                         },
                       );
@@ -297,7 +289,6 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Scroll to top
           PrimaryScrollController.of(context).animateTo(
             0,
             duration: const Duration(milliseconds: 300),
