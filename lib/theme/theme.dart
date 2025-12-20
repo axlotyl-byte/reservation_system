@@ -6,14 +6,14 @@ class BakeryTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primarySwatch: _createMaterialColor(primaryColor),
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       primary: primaryColor,
       secondary: secondaryColor,
-      background: backgroundColorLight,
+      surfaceBright: backgroundColorLight,
       surface: surfaceColorLight,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
-      onBackground: textColorLight,
+      onSurfaceVariant: textColorLight,
       onSurface: textColorLight,
       error: errorColor,
     ),
@@ -124,7 +124,7 @@ class BakeryTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: primaryColor,
-        side: BorderSide(color: primaryColor, width: 1.5),
+        side: const BorderSide(color: primaryColor, width: 1.5),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -158,15 +158,15 @@ class BakeryTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: primaryColor, width: 2),
+        borderSide: const BorderSide(color: primaryColor, width: 2),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: errorColor, width: 1),
+        borderSide: const BorderSide(color: errorColor, width: 1),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: errorColor, width: 2),
+        borderSide: const BorderSide(color: errorColor, width: 2),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       hintStyle: GoogleFonts.montserrat(
@@ -268,14 +268,14 @@ class BakeryTheme {
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: _createMaterialColor(primaryColor),
-    colorScheme: ColorScheme.dark(
+    colorScheme: const ColorScheme.dark(
       primary: primaryColor,
       secondary: secondaryColor,
-      background: backgroundColorDark,
+      surfaceBright: backgroundColorDark,
       surface: surfaceColorDark,
       onPrimary: Colors.white,
       onSecondary: Colors.white,
-      onBackground: textColorDark,
+      onSurfaceVariant: textColorDark,
       onSurface: textColorDark,
       error: errorColor,
     ),
@@ -400,7 +400,7 @@ class BakeryTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: primaryColor, width: 2),
+        borderSide: const BorderSide(color: primaryColor, width: 2),
       ),
     ),
   );

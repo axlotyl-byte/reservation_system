@@ -23,4 +23,6 @@ class Order extends Equatable {
   @override
   List<Object?> get props =>
       [id, customerId, items, totalAmount, status, createdAt, pickupDate];
+
+  get copy => null;
 }
