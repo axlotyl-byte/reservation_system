@@ -411,12 +411,22 @@ class BakeryTheme {
   static const Color accentColor = Color(0xFFFFD166); // Golden yellow
   static const Color errorColor = Color(0xFFE63946); // Soft red
   static const Color successColor = Color(0xFF2A9D8F); // Teal green
+<
+
+  // Light Theme Colors
+  static const Color backgroundColorLight =
+      Color(0xFFFDF6E9); // Cream/off-white
+  static const Color surfaceColorLight = Color(0xFFFFFFFF); // Pure white
+  static const Color textColorLight = Color(0xFF3C2A1E); // Dark brown
+
+=======
   
   // Light Theme Colors
   static const Color backgroundColorLight = Color(0xFFFDF6E9); // Cream/off-white
   static const Color surfaceColorLight = Color(0xFFFFFFFF); // Pure white
   static const Color textColorLight = Color(0xFF3C2A1E); // Dark brown
   
+
   // Dark Theme Colors
   static const Color backgroundColorDark = Color(0xFF1A1A1A);
   static const Color surfaceColorDark = Color(0xFF2D2D2D);
@@ -450,17 +460,13 @@ class BakeryTheme {
   }
 }
 
-// Custom Text Styles for easy access
+
 class BakeryTextStyles {
   // Display Styles (Playfair Display)
   static TextStyle displayLarge(BuildContext context) {
     return Theme.of(context).textTheme.displayLarge!;
   }
-  
-  static TextStyle displayMedium(BuildContext context) {
-    return Theme.of(context).textTheme.displayMedium!;
-  }
-  
+
   static TextStyle displaySmall(BuildContext context) {
     return Theme.of(context).textTheme.displaySmall!;
   }
@@ -469,11 +475,7 @@ class BakeryTextStyles {
   static TextStyle headlineLarge(BuildContext context) {
     return Theme.of(context).textTheme.headlineLarge!;
   }
-  
-  static TextStyle headlineMedium(BuildContext context) {
-    return Theme.of(context).textTheme.headlineMedium!;
-  }
-  
+
   static TextStyle headlineSmall(BuildContext context) {
     return Theme.of(context).textTheme.headlineSmall!;
   }
@@ -482,11 +484,7 @@ class BakeryTextStyles {
   static TextStyle titleLarge(BuildContext context) {
     return Theme.of(context).textTheme.titleLarge!;
   }
-  
-  static TextStyle titleMedium(BuildContext context) {
-    return Theme.of(context).textTheme.titleMedium!;
-  }
-  
+
   static TextStyle titleSmall(BuildContext context) {
     return Theme.of(context).textTheme.titleSmall!;
   }
@@ -495,11 +493,7 @@ class BakeryTextStyles {
   static TextStyle bodyLarge(BuildContext context) {
     return Theme.of(context).textTheme.bodyLarge!;
   }
-  
-  static TextStyle bodyMedium(BuildContext context) {
-    return Theme.of(context).textTheme.bodyMedium!;
-  }
-  
+
   static TextStyle bodySmall(BuildContext context) {
     return Theme.of(context).textTheme.bodySmall!;
   }
@@ -508,11 +502,7 @@ class BakeryTextStyles {
   static TextStyle labelLarge(BuildContext context) {
     return Theme.of(context).textTheme.labelLarge!;
   }
-  
-  static TextStyle labelMedium(BuildContext context) {
-    return Theme.of(context).textTheme.labelMedium!;
-  }
-  
+
   static TextStyle labelSmall(BuildContext context) {
     return Theme.of(context).textTheme.labelSmall!;
   }
@@ -582,11 +572,6 @@ class BakeryTextStyles {
   }
 }
 
-// Widget Extension for easy styling
-extension ThemeExtension on BuildContext {
-  ThemeData get theme => Theme.of(this);
-  TextTheme get textTheme => Theme.of(this).textTheme;
-  ColorScheme get colorScheme => Theme.of(this).colorScheme;
 }
 
 // Custom Padding Constants
@@ -607,4 +592,3 @@ class BakeryBorderRadius {
   static const BorderRadius lg = BorderRadius.all(Radius.circular(16));
   static const BorderRadius xl = BorderRadius.all(Radius.circular(24));
   static const BorderRadius round = BorderRadius.all(Radius.circular(999));
-}
