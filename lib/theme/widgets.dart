@@ -32,9 +32,6 @@ class AppWidgets {
           textColor = Colors.deepOrange;
           break;
         case 'ready':
-          backgroundColor = Colors.green.withOpacity(0.15);
-          textColor = Colors.green;
-          break;
         case 'completed':
           backgroundColor = Colors.green.withOpacity(0.15);
           textColor = Colors.green;
@@ -74,7 +71,7 @@ class AppWidgets {
       borderRadius: const BorderRadius.all(Radius.circular(12)),
       boxShadow: const [
         BoxShadow(
-          color: Color(0x14000000), // black with 0.08 opacity
+          color: Color(0x14000000),
           blurRadius: 8,
           offset: Offset(0, 2),
         ),
@@ -89,7 +86,7 @@ class AppWidgets {
       borderRadius: const BorderRadius.all(Radius.circular(16)),
       boxShadow: const [
         BoxShadow(
-          color: Color(0x0D000000), // black with 0.05 opacity
+          color: Color(0x0D000000),
           blurRadius: 6,
           offset: Offset(0, 1),
         ),
@@ -220,6 +217,42 @@ class AppWidgets {
     );
   }
 
+  // Info chip
+  static Widget infoChip({
+    required BuildContext context,
+    required IconData icon,
+    required String text,
+    Color? backgroundColor,
+    Color? iconColor,
+    Color? textColor,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color:
+            backgroundColor ?? Theme.of(context).primaryColor.withOpacity(0.1),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 18,
+            color: iconColor ?? Theme.of(context).primaryColor,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: textColor ?? Theme.of(context).primaryColor,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+
   // Quantity selector
   static Widget quantitySelector({
     required BuildContext context,
@@ -235,9 +268,7 @@ class AppWidgets {
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
         borderRadius: const BorderRadius.all(Radius.circular(12)),
-        border: Border.all(
-          color: color.withOpacity(0.2),
-        ),
+        border: Border.all(color: color.withOpacity(0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -273,120 +304,10 @@ class AppWidgets {
       ),
     );
   }
-
-  // Custom divider
-  static Widget customDivider({
-    BuildContext? context,
-    Color? color,
-    double? thickness,
-    double? height,
-    EdgeInsets? padding,
-  }) {
-    return Padding(
-      padding: padding ?? EdgeInsets.zero,
-      child: Divider(
-        height: height,
-        thickness: thickness ?? 1,
-        color: color ??
-            (context != null
-                ? Theme.of(context).dividerTheme.color
-                : const Color(0xFFE0E0E0)), // Colors.grey[300]
-      ),
-    );
-  }
-
-  // Info chip
-  static Widget infoChip({
-    required BuildContext context,
-    required IconData icon,
-    required String text,
-    Color? backgroundColor,
-    Color? iconColor,
-    Color? textColor,
-  }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: backgroundColor ?? const Color(0xFFE3F2FD), // Colors.blue[50]
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            size: 16,
-            color: iconColor ?? const Color(0xFF1976D2), // Colors.blue[700]
-          ),
-          const SizedBox(width: 6),
-          Text(
-            text,
-            style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                  color:
-                      textColor ?? const Color(0xFF1976D2), // Colors.blue[700]
-                  fontWeight: FontWeight.w500,
-                ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Labeled value
-  static Widget labeledValue({
-    required BuildContext context,
-    required String label,
-    required String value,
-    bool isBoldValue = true,
-    CrossAxisAlignment alignment = CrossAxisAlignment.start,
-  }) {
-    return Column(
-      crossAxisAlignment: alignment,
-      children: [
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                color: Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .color!
-                    .withOpacity(0.7),
-              ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: isBoldValue
-              ? Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontWeight: FontWeight.w600,
-                  )
-              : Theme.of(context).textTheme.bodyMedium,
-        ),
-      ],
-    );
-  }
-
-  // Shimmer loading placeholder
-  static Widget shimmerPlaceholder({
-    required double width,
-    required double height,
-    BorderRadiusGeometry? borderRadius,
-  }) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5), // Colors.grey[200]
-        borderRadius:
-            borderRadius ?? const BorderRadius.all(Radius.circular(12)),
-      ),
-    );
-  }
 }
 
 // Quick theme access extension
 extension WidgetsExtension on BuildContext {
-  // Common widget helpers
   Widget statusBadge(String status,
           {double? fontSize, Color? color, String? text}) =>
       AppWidgets.statusBadge(
@@ -449,52 +370,34 @@ extension WidgetsExtension on BuildContext {
         iconColor: iconColor,
         textColor: textColor,
       );
-}
 
-// Animation constants
-class AppAnimations {
-  static const Duration pageTransition = Duration(milliseconds: 300);
-  static const Duration buttonPress = Duration(milliseconds: 150);
-  static const Duration snackbar = Duration(seconds: 3);
-  static const Duration shimmer = Duration(milliseconds: 1500);
-}
-
-// Spacing constants
-class AppSpacing {
-  static const double xs = 4.0;
-  static const double sm = 8.0;
-  static const double md = 16.0;
-  static const double lg = 24.0;
-  static const double xl = 32.0;
-  static const double xxl = 48.0;
-
-  static const EdgeInsets paddingXS = EdgeInsets.all(xs);
-  static const EdgeInsets paddingSM = EdgeInsets.all(sm);
-  static const EdgeInsets paddingMD = EdgeInsets.all(md);
-  static const EdgeInsets paddingLG = EdgeInsets.all(lg);
-  static const EdgeInsets paddingXL = EdgeInsets.all(xl);
-  static const EdgeInsets paddingXXL = EdgeInsets.all(xxl);
-
-  static EdgeInsets paddingHorizontal(double value) =>
-      EdgeInsets.symmetric(horizontal: value);
-  static EdgeInsets paddingVertical(double value) =>
-      EdgeInsets.symmetric(vertical: value);
-  static EdgeInsets paddingSym({double horizontal = 0, double vertical = 0}) =>
-      EdgeInsets.symmetric(
-        horizontal: horizontal,
-        vertical: vertical,
+  Widget priceDisplay({
+    required double price,
+    TextStyle? style,
+    bool withCurrency = true,
+    String currencySymbol = '\$',
+  }) =>
+      AppWidgets.priceDisplay(
+        context: this,
+        price: price,
+        style: style,
+        withCurrency: withCurrency,
+        currencySymbol: currencySymbol,
       );
-}
 
-// Border radius constants
-class AppBorderRadius {
-  static const BorderRadius xs = BorderRadius.all(Radius.circular(4));
-  static const BorderRadius sm = BorderRadius.all(Radius.circular(8));
-  static const BorderRadius md = BorderRadius.all(Radius.circular(12));
-  static const BorderRadius lg = BorderRadius.all(Radius.circular(16));
-  static const BorderRadius xl = BorderRadius.all(Radius.circular(24));
-  static const BorderRadius round = BorderRadius.all(Radius.circular(999));
-
-  static BorderRadius circular(double radius) =>
-      BorderRadius.all(Radius.circular(radius));
+  Widget quantitySelector({
+    required int quantity,
+    required VoidCallback onDecrease,
+    required VoidCallback onIncrease,
+    bool isCompact = false,
+    Color? selectorColor,
+  }) =>
+      AppWidgets.quantitySelector(
+        context: this,
+        quantity: quantity,
+        onDecrease: onDecrease,
+        onIncrease: onIncrease,
+        isCompact: isCompact,
+        selectorColor: selectorColor,
+      );
 }
